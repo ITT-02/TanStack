@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ProductForm } from '../../components/productosComponents/ProductForm';
-import { ProductList } from '../../components/productosComponents/ProductList';
+import { ProductForm } from '../../components/productosComponents/ShanneComponents/ProductForm';
+import { ProductList } from '../../components/productosComponents/ShanneComponents/ProductList';
 import { useProducts } from '../../hooks/productosHooks/useProductsTanstack';
 import {
   initialProductFormData,
