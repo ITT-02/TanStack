@@ -4,7 +4,7 @@ import {
   deleteProduct,
   getProducts,
   updateProduct,
-} from '../services/productService';
+} from '../../services/productosServices/productService';
 
 export const useProducts = () => {
 

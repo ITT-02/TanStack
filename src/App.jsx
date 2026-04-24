@@ -1,4 +1,4 @@
-import { ProductsPage } from './pages/ProductsPage';
+import { ProductsPage } from './pages/productosPages/ProductsPage';
 
 export const App = () => {
 

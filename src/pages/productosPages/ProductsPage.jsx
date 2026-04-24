@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { ProductForm } from '../components/ProductForm';
-import { ProductList } from '../components/ProductList';
-import { useProducts } from '../hooks/useProductsTanstack';
+import { ProductForm } from '../../components/productosComponents/ProductForm';
+import { ProductList } from '../../components/productosComponents/ProductList';
+import { useProducts } from '../../hooks/productosHooks/useProductsTanstack';
 import {
   initialProductFormData,
   mapFormDataToProduct,
   mapProductToFormData,
-} from '../utils/productMapper';
+} from '../../utils/productosUtils/productMapper';
 
 export const ProductsPage = () => {
   const [formData, setFormData] = useState(initialProductFormData);
