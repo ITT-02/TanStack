@@ -1,30 +1,97 @@
-export const CategoryList = ({ categories, onEdit, onDelete }) => {
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Slug</th>
-          <th>Activo</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Chip,
+  IconButton,
+  Box,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-      <tbody>
-        {categories.map((cat) => (
-          <tr key={cat.id}>
-            <td>{cat.id}</td>
-            <td>{cat.nombre}</td>
-            <td>{cat.slug}</td>
-            <td>{cat.activo ? "Sí" : "No"}</td>
-            <td>
-              <button onClick={() => onEdit(cat)}>Editar</button>
-              <button onClick={() => onDelete(cat.id)}>Eliminar</button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+export const CategoryList = ({ categories, onEdit, onDelete }) => {
+  if (categories.length === 0) {
+    return (
+      <Paper elevation={2} sx={{ p: 3, borderRadius: 4 }}>
+        <Typography variant="body1" color="text.secondary" align="center">
+          No hay categorías registradas.
+        </Typography>
+      </Paper>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} elevation={2} sx={{ borderRadius: 4 }}>
+      <Table>
+        <TableHead>
+          <TableRow sx={{ backgroundColor: "primary.main" }}>
+            <TableCell sx={{ color: "primary.contrastText", fontWeight: 600 }}>
+              ID
+            </TableCell>
+            <TableCell sx={{ color: "primary.contrastText", fontWeight: 600 }}>
+              Nombre
+            </TableCell>
+            <TableCell sx={{ color: "primary.contrastText", fontWeight: 600 }}>
+              Slug
+            </TableCell>
+            <TableCell sx={{ color: "primary.contrastText", fontWeight: 600 }}>
+              Activo
+            </TableCell>
+            <TableCell
+              sx={{ color: "primary.contrastText", fontWeight: 600 }}
+              align="center"
+            >
+              Acciones
+            </TableCell>
+          </TableRow>
+        </TableHead>
+
+        <TableBody>
+          {categories.map((cat) => (
+            <TableRow
+              key={cat.id}
+              hover
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell>{cat.id}</TableCell>
+              <TableCell>{cat.nombre}</TableCell>
+              <TableCell>{cat.slug}</TableCell>
+              <TableCell>
+                <Chip
+                  label={cat.activo ? "Sí" : "No"}
+                  color={cat.activo ? "success" : "error"}
+                  size="small"
+                  sx={{ fontWeight: 500 }}
+                />
+              </TableCell>
+              <TableCell align="center">
+                <Box sx={{ display: "flex", justifyContent: "center", gap: 1 }}>
+                  <IconButton
+                    color="primary"
+                    onClick={() => onEdit(cat)}
+                    size="small"
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    color="error"
+                    onClick={() => onDelete(cat.id)}
+                    size="small"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Box>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
+

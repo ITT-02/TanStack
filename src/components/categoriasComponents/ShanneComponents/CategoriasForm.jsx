@@ -1,3 +1,16 @@
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Cancel";
+
 export const CategoryForm = ({
   formData,
   onChange,
@@ -6,42 +19,72 @@ export const CategoryForm = ({
   onCancel,
 }) => {
   return (
-    <form onSubmit={onSubmit}>
-      <h3>{editingId ? "Editar" : "Crear"} categoría</h3>
+    <Paper elevation={2} sx={{ p: 3, mb: 3, borderRadius: 4 }}>
+      <Typography variant="h5" component="h3" gutterBottom fontWeight={600}>
+        {editingId ? "Editar" : "Crear"} categoría
+      </Typography>
 
-      <input
-        name="nombre"
-        placeholder="Nombre"
-        value={formData.nombre}
-        onChange={onChange}
-      />
+      <Box component="form" onSubmit={onSubmit}>
+        <Stack spacing={2}>
+          <TextField
+            name="nombre"
+            label="Nombre"
+            placeholder="Nombre de la categoría"
+            value={formData.nombre}
+            onChange={onChange}
+            fullWidth
+            variant="outlined"
+            required
+          />
 
-      <input
-        name="slug"
-        placeholder="Slug"
-        value={formData.slug}
-        onChange={onChange}
-      />
+          <TextField
+            name="slug"
+            label="Slug"
+            placeholder="slug-de-la-categoria"
+            value={formData.slug}
+            onChange={onChange}
+            fullWidth
+            variant="outlined"
+            required
+          />
 
-      <label>
-        Activo
-        <input
-          type="checkbox"
-          name="activo"
-          checked={formData.activo}
-          onChange={onChange}
-        />
-      </label>
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="activo"
+                checked={formData.activo}
+                onChange={onChange}
+                color="primary"
+              />
+            }
+            label="Activo"
+          />
 
-      <button type="submit">
-        {editingId ? "Actualizar" : "Guardar"}
-      </button>
+          <Stack direction="row" spacing={2}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              startIcon={<SaveIcon />}
+            >
+              {editingId ? "Actualizar" : "Guardar"}
+            </Button>
 
-      {editingId && (
-        <button type="button" onClick={onCancel}>
-          Cancelar
-        </button>
-      )}
-    </form>
+            {editingId && (
+              <Button
+                type="button"
+                variant="outlined"
+                color="secondary"
+                startIcon={<CancelIcon />}
+                onClick={onCancel}
+              >
+                Cancelar
+              </Button>
+            )}
+          </Stack>
+        </Stack>
+      </Box>
+    </Paper>
   );
 };
+

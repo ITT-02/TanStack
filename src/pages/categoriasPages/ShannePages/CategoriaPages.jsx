@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Container, Typography, Divider, Stack, Box } from "@mui/material";
+import CategoryIcon from "@mui/icons-material/Category";
 
 import { CategoryForm } from "../../../components/categoriasComponents/ShanneComponents/CategoriasForm";
 import { CategoryList } from "../../../components/categoriasComponents/ShanneComponents/CategoriasList";
@@ -57,20 +59,32 @@ export const CategoriaPages = () => {
   };
 
   return (
-    <div>
-      <CategoryForm
-        formData={formData}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-        editingId={editingId}
-        onCancel={handleCancel}
-      />
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      <Stack spacing={3}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+          <CategoryIcon color="primary" sx={{ fontSize: 32 }} />
+          <Typography variant="h3" component="h1" fontWeight={700}>
+            Gestión de Categorías
+          </Typography>
+        </Box>
 
-      <CategoryList
-        categories={categories}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
-    </div>
+        <CategoryForm
+          formData={formData}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          editingId={editingId}
+          onCancel={handleCancel}
+        />
+
+        <Divider />
+
+        <CategoryList
+          categories={categories}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
+      </Stack>
+    </Container>
   );
 };
+
