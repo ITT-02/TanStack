@@ -1,7 +1,20 @@
 import { useState } from 'react';
+
+import {
+  Alert,
+  Box,
+  CircularProgress,
+  Container,
+  Grid,
+  Typography,
+} from '@mui/material';
+
 import { ProductForm } from '../../components/productosComponents/ProductForm';
 import { ProductList } from '../../components/productosComponents/ProductList';
+
 import { useProducts } from '../../hooks/productosHooks/useProductsTanstack';
+import { useCategories } from '../../hooks/categoriasHooks/useCategorias';
+
 import {
   initialProductFormData,
   mapFormDataToProduct,
@@ -11,7 +24,19 @@ import {
 export const ProductsPage = () => {
   const [formData, setFormData] = useState(initialProductFormData);
   const [editingId, setEditingId] = useState(null);
-  const { error, loading, products, removeProduct, saveProduct } = useProducts();
+
+  const {
+    error,
+    loading,
+    products,
+    removeProduct,
+    saveProduct,
+  } = useProducts();
+
+  // Traemos las categorías para mostrarlas en el select.
+  const {
+  categories,
+} = useCategories();
 
   const changeInput = (e) => {
     const { name, value, type, checked } = e.target;
@@ -31,6 +56,7 @@ export const ProductsPage = () => {
     e.preventDefault();
 
     const productData = mapFormDataToProduct(formData);
+
     const wasSaved = await saveProduct(productData, editingId);
 
     if (wasSaved) {
@@ -51,29 +77,58 @@ export const ProductsPage = () => {
     }
   };
 
-  if (loading) return <p>Cargando productos...</p>;
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          minHeight: '60vh',
+          display: 'grid',
+          placeItems: 'center',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Productos</h1>
+    <Container maxWidth="xl" sx={{ py: 3 }}>
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h4" fontWeight={700}>
+          Productos
+        </Typography>
 
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+        <Typography variant="body2" color="text.secondary">
+          Administra los productos registrados en la tienda.
+        </Typography>
+      </Box>
 
-      <ProductForm
-        editingId={editingId}
-        formData={formData}
-        onCancel={resetForm}
-        onChange={changeInput}
-        onSubmit={handleSubmit}
-      />
+      {error && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          Error: {error}
+        </Alert>
+      )}
 
-      <hr />
+      <Grid container spacing={3}>
+        <Grid size={{ xs: 12, lg: 5 }}>
+          <ProductForm
+            editingId={editingId}
+            formData={formData}
+            categories={categories}
+            onCancel={resetForm}
+            onChange={changeInput}
+            onSubmit={handleSubmit}
+          />
+        </Grid>
 
-      <ProductList
-        onDelete={handleDelete}
-        onEdit={handleEdit}
-        products={products}
-      />
-    </div>
+        <Grid size={{ xs: 12, lg: 7 }}>
+          <ProductList
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+            products={products}
+          />
+        </Grid>
+      </Grid>
+    </Container>
   );
 };

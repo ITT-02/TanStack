@@ -1,188 +1,313 @@
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  InputAdornment,
+  MenuItem,
+  Stack,
+  Switch,
+  TextField,
+  Typography,
+} from '@mui/material';
+
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import SaveIcon from '@mui/icons-material/Save';
+import CloseIcon from '@mui/icons-material/Close';
+
 export const ProductForm = ({
   editingId,
   formData,
+  categories = [],
   onCancel,
   onChange,
   onSubmit,
 }) => {
   return (
-    <form onSubmit={onSubmit}>
-      <h3>{editingId ? 'Editar producto' : 'Agregar producto'}</h3>
+    <Card>
+      <CardContent>
+        {/* Encabezado del formulario */}
+        <Stack
+          direction="row"
+          spacing={1.5}
+          sx={{
+            alignItems: 'center',
+            mb: 3,
+          }}
+        >
+          {/* Ícono*/}
+          <Box
+            sx={{
+              width: 42,
+              height: 42,
+              borderRadius: 2,
+              display: 'grid',
+              placeItems: 'center',
+              bgcolor: 'primary.main',
+              color: 'primary.contrastText',
+            }}
+          >
+            <Inventory2Icon />
+          </Box>
 
-      <div>
-        <label>
-          SKU:
-          <input
-            id="sku"
-            name="sku"
-            type="text"
-            onChange={onChange}
-            value={formData.sku}
-          />
-        </label>
-      </div>
+          <Box>
+            <Typography variant="h5">
+              {editingId ? 'Editar producto' : 'Agregar producto'}
+            </Typography>
+          </Box>
+        </Stack>
 
-      <br />
+        <Divider sx={{ mb: 3 }} />
 
-      <div>
-        <label>
-          Nombre:
-          <input
-            id="nombre"
-            name="nombre"
-            type="text"
-            onChange={onChange}
-            value={formData.nombre}
-          />
-        </label>
-      </div>
+        {/* Formulario */}
+        <Box component="form" onSubmit={onSubmit} autoComplete="off">
+          <Grid container spacing={2}>
+            {/* SKU */}
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                id="sku"
+                name="sku"
+                label="SKU"
+                placeholder="Ingrese SKU"
+                type="text"
+                value={formData.sku}
+                onChange={onChange}
+                fullWidth
+              />
+            </Grid>
 
-      <br />
+            {/* Nombre */}
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                id="nombre"
+                name="nombre"
+                label="Nombre"
+                placeholder="Ingrese nombre"
+                type="text"
+                value={formData.nombre}
+                onChange={onChange}
+                fullWidth
+              />
+            </Grid>
 
-      <div>
-        <label>
-          Slug:
-          <input
-            id="slug"
-            name="slug"
-            type="text"
-            onChange={onChange}
-            value={formData.slug}
-          />
-        </label>
-      </div>
+            {/* Slug */}
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                id="slug"
+                name="slug"
+                label="Slug"
+                placeholder="Ingrese slug"
+                type="text"
+                value={formData.slug}
+                onChange={onChange}
+                fullWidth
+              />
+            </Grid>
 
-      <br />
+            {/* Categoría */}
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                id="categoria_id"
+                name="categoria_id"
+                label="Categoría"
+                value={formData.categoria_id}
+                onChange={onChange}
+                fullWidth
+                select
+              >
+                <MenuItem value="">
+                  Seleccione una categoría
+                </MenuItem>
 
-      <div>
-        <label>
-          Descripción:
-          <textarea
-            id="descripcion"
-            name="descripcion"
-            onChange={onChange}
-            value={formData.descripcion}
-          />
-        </label>
-      </div>
+                {categories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.nombre}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
 
-      <br />
+            {/* Descripción */}
+            <Grid size={{ xs: 12 }}>
+              <TextField
+                id="descripcion"
+                name="descripcion"
+                label="Descripción"
+                placeholder="Ingrese descripción"
+                value={formData.descripcion}
+                onChange={onChange}
+                fullWidth
+                multiline
+                minRows={3}
+              />
+            </Grid>
 
-      <div>
-        <label>
-          Precio:
-          <input
-            id="precio"
-            name="precio"
-            type="number"
-            step="0.01"
-            onChange={onChange}
-            value={formData.precio}
-          />
-        </label>
-      </div>
+            {/* Precio */}
+            <Grid size={{ xs: 12, sm: 4 }}>
+              <TextField
+                id="precio"
+                name="precio"
+                label="Precio"
+                placeholder="Ingrese precio"
+                type="number"
+                value={formData.precio}
+                onChange={onChange}
+                fullWidth
+                slotProps={{
+                  htmlInput: {
+                    step: '0.01',
+                    min: '0',
+                  },
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">S/</InputAdornment>
+                    ),
+                  },
+                }}
+              />
+            </Grid>
 
-      <br />
+            {/* Stock actual */}
+            <Grid size={{ xs: 12, sm: 4 }}>
+              <TextField
+                id="stock_actual"
+                name="stock_actual"
+                label="Stock actual"
+                placeholder="Ingrese stock actual"
+                type="number"
+                value={formData.stock_actual}
+                onChange={onChange}
+                fullWidth
+                slotProps={{
+                  htmlInput: {
+                    min: '0',
+                  },
+                }}
+              />
+            </Grid>
 
-      <div>
-        <label>
-          Stock actual:
-          <input
-            id="stock_actual"
-            name="stock_actual"
-            type="number"
-            onChange={onChange}
-            value={formData.stock_actual}
-          />
-        </label>
-      </div>
+            {/* Stock mínimo */}
+            <Grid size={{ xs: 12, sm: 4 }}>
+              <TextField
+                id="stock_minimo"
+                name="stock_minimo"
+                label="Stock mínimo"
+                placeholder="Ingrese stock mínimo"
+                type="number"
+                value={formData.stock_minimo}
+                onChange={onChange}
+                fullWidth
+                slotProps={{
+                  htmlInput: {
+                    min: '0',
+                  },
+                }}
+              />
+            </Grid>
 
-      <br />
+            {/* Material */}
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                id="material"
+                name="material"
+                label="Material"
+                placeholder="Ingrese material"
+                type="text"
+                value={formData.material}
+                onChange={onChange}
+                fullWidth
+              />
+            </Grid>
 
-      <div>
-        <label>
-          Stock mínimo:
-          <input
-            id="stock_minimo"
-            name="stock_minimo"
-            type="number"
-            onChange={onChange}
-            value={formData.stock_minimo}
-          />
-        </label>
-      </div>
+            {/* Estado activo / inactivo */}
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Box
+                sx={{
+                  px: 2,
+                  py: 1.5,
+                  border: 1,
+                  borderColor: 'divider',
+                  borderRadius: 1,
+                  bgcolor: 'background.default',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <Stack
+                  direction="row"
+                  spacing={1.5}
+                  sx={{
+                    alignItems: 'center',
+                  }}
+                >
+                  <Switch
+                    id="activo"
+                    name="activo"
+                    checked={formData.activo}
+                    onChange={onChange}
+                    color="primary"
+                  />
 
-      <br />
+                  <Typography fontWeight={600}>
+                    {formData.activo ? 'Activo' : 'Inactivo'}
+                  </Typography>
+                </Stack>
+              </Box>
+            </Grid>
 
-      <div>
-        <label>
-          Categoría ID:
-          <input
-            id="categoria_id"
-            name="categoria_id"
-            type="text"
-            onChange={onChange}
-            value={formData.categoria_id}
-          />
-        </label>
-      </div>
+            {/* Fotos */}
+            <Grid size={{ xs: 12 }}>
+              <TextField
+                id="fotos"
+                name="fotos"
+                label="Fotos"
+                placeholder="Ingrese fotos separadas por coma"
+                value={formData.fotos}
+                onChange={onChange}
+                fullWidth
+                multiline
+                minRows={2}
+              />
+            </Grid>
 
-      <br />
+            {/* Botones */}
+            <Grid size={{ xs: 12 }}>
+              <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={1.5}
+                sx={{
+                  justifyContent: 'flex-end',
+                  pt: 1,
+                }}
+              >
+                {editingId && (
+                  <Button
+                    type="button"
+                    variant="outlined"
+                    color="secondary"
+                    startIcon={<CloseIcon />}
+                    onClick={onCancel}
+                  >
+                    Cancelar edición
+                  </Button>
+                )}
 
-      <div>
-        <label>
-          Material:
-          <input
-            id="material"
-            name="material"
-            type="text"
-            onChange={onChange}
-            value={formData.material}
-          />
-        </label>
-      </div>
-
-      <br />
-
-      <div>
-        <label>
-          Fotos:
-          <textarea
-            id="fotos"
-            name="fotos"
-            placeholder="Separa varias fotos por coma"
-            onChange={onChange}
-            value={formData.fotos}
-          />
-        </label>
-      </div>
-
-      <br />
-
-      <div>
-        <label>
-          Activo:
-          <input
-            id="activo"
-            name="activo"
-            type="checkbox"
-            onChange={onChange}
-            checked={formData.activo}
-          />
-        </label>
-      </div>
-
-      <br />
-
-      <button type="submit">
-        {editingId ? 'Actualizar producto' : 'Agregar producto'}
-      </button>
-
-      {editingId && (
-        <button type="button" onClick={onCancel} style={{ marginLeft: '10px' }}>
-          Cancelar edición
-        </button>
-      )}
-    </form>
-  );
-};
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  startIcon={<SaveIcon />}
+                >
+                  {editingId ? 'Actualizar producto' : 'Agregar producto'}
+                </Button>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Box>
+      </CardContent>
+    </Card>
+  )
+}
