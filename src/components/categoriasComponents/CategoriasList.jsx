@@ -1,5 +1,3 @@
-// src/components/categoriasComponents/CategoryList.jsx
-
 import {
   Box,
   Button,
@@ -19,7 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export const CategoryList = ({ categories, onEdit, onDelete }) => {
-  // Si no hay categorías, mostramos un mensaje bonito con MUI.
+  // Si no hay categorias
   if (categories.length === 0) {
     return (
       <Paper

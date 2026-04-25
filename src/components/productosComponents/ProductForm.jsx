@@ -1,5 +1,3 @@
-// src/components/productosComponents/ProductForm.jsx
-
 import {
   Box,
   Button,
@@ -39,7 +37,7 @@ export const ProductForm = ({
             mb: 3,
           }}
         >
-          {/* Ícono decorativo */}
+          {/* Ícono*/}
           <Box
             sx={{
               width: 42,
@@ -63,7 +61,7 @@ export const ProductForm = ({
 
         <Divider sx={{ mb: 3 }} />
 
-        {/* Formulario real */}
+        {/* Formulario */}
         <Box component="form" onSubmit={onSubmit} autoComplete="off">
           <Grid container spacing={2}>
             {/* SKU */}

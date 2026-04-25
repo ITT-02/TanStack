@@ -34,7 +34,7 @@ export const CategoryForm = ({
                 mb: 3,
             }}
             >
-          {/* Ícono decorativo */}
+          {/* Ícono */}
           <Box
             sx={{
               width: 42,

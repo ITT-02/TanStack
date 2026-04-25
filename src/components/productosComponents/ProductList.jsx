@@ -1,5 +1,3 @@
-// src/components/productosComponents/ProductList.jsx
-
 import {
   Box,
   Button,
