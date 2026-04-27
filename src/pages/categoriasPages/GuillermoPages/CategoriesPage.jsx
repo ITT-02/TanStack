@@ -7,6 +7,7 @@ import {
   mapFormDataToCategory,
   mapCategoryToFormData,
 } from '../../../utils/categoriasUtils/GuillermoUtils/categoryMapper';
+import { Typography } from '@mui/material';
 
 export const CategoriesPage = () => {
   const [formData, setFormData] = useState(initialCategoryFormData);
@@ -62,7 +63,7 @@ export const CategoriesPage = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>Categorías</h1>
+      <Typography variant='h1'>Categorías</Typography>
 
       {error && <p style={{ color: 'red' }}>Error al cargar: {error}</p>}
       {formError && <p style={{ color: 'red', fontWeight: 'bold', padding: '10px', backgroundColor: '#ffe6e6', borderRadius: '4px' }}>⚠️ {formError}</p>}
