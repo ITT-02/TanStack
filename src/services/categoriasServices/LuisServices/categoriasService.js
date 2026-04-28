@@ -1,0 +1,23 @@
+import { api } from '../../../api/axiosConfig';
+
+const TABLE = 'categorias';
+
+export const getCategories = async () => {
+  const { data } = await api.get(`/${TABLE}?select=*&order=id.desc`);
+  return data;
+};
+
+export const createCategory = async (category) => {
+  const { data } = await api.post(`/${TABLE}`, [category], { headers: { Prefer: 'return=representation' } });
+  return data;
+};
+
+export const updateCategory = async (id, category) => {
+  const { data } = await api.patch(`/${TABLE}?id=eq.${id}`, category, { headers: { Prefer: 'return=representation' } });
+  return data;
+};
+
+export const deleteCategory = async (id) => {
+  await api.delete(`/${TABLE}?id=eq.${id}`);
+  return true;
+};

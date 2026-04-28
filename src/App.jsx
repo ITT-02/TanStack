@@ -1,12 +1,12 @@
-import { ProductsPage } from './pages/productosPages/ProductsPage';
-import {CategoriesPage } from './pages/categoriasPages/CategoriaPages'
+import { ProductsPage } from './pages/productosPages/LuisPages/ProductsPage';
+import { CategoriesPage } from './pages/categoriasPages/LuisPages/CategoriaPages';
+
 export const App = () => {
 
   return (
     <>
        <ProductsPage />
-       <CategoriesPage/>
-
+       <CategoriesPage />
     </>
     
   )

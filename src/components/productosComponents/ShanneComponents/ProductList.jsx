@@ -1,5 +1,5 @@
 export const ProductList = ({ onDelete, onEdit, products }) => {
-  if (products.length === 0) {
+  if (!Array.isArray(products) || products.length === 0) {
     return <p>No hay productos registrados.</p>;
   }
  

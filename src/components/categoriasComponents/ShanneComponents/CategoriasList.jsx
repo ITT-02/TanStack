@@ -52,7 +52,7 @@ export const CategoryList = ({ categories, onEdit, onDelete }) => {
         </TableHead>
 
         <TableBody>
-          {categories.map((cat) => (
+          {Array.isArray(categories) && categories.map((cat) => (
             <TableRow
               key={cat.id}
               hover

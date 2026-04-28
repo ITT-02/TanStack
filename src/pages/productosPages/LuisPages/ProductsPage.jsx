@@ -9,37 +9,32 @@ import {
   Typography,
 } from '@mui/material';
 
-import { ProductForm } from '../../components/productosComponents/ShanneComponents/ProductForm';
-import { ProductList } from '../../components/productosComponents/ShanneComponents/ProductList';
+import { ProductForm } from '../../../components/productosComponents/LuisComponents/ProductForm';
+import { ProductList } from '../../../components/productosComponents/LuisComponents/ProductList';
 
-//import { ProductForm } from '../../components/productosComponents/ProductForm';
-//import { ProductList } from '../../components/productosComponents/ProductList';
-
-import { useProducts } from '../../hooks/productosHooks/useProductsTanstack';
-import { useCategories } from '../../hooks/categoriasHooks/useCategorias';
+import { useProducts } from '../../../hooks/productosHooks/LuisHooks/useProducts';
+import { useCategorias } from '../../../hooks/categoriasHooks/LuisHooks/useCategorias';
 
 import {
   initialProductFormData,
   mapFormDataToProduct,
   mapProductToFormData,
-} from '../../utils/productosUtils/productMapper';
+} from '../../../utils/productosUtils/LuisUtils/productMapper';
 
 export const ProductsPage = () => {
   const [formData, setFormData] = useState(initialProductFormData);
   const [editingId, setEditingId] = useState(null);
 
   const {
-    error,
-    loading,
     products,
+    loading,
+    error,
+    addProduct,
+    editProduct,
     removeProduct,
-    saveProduct,
   } = useProducts();
 
-  // Traemos las categorías para mostrarlas en el select.
-  const {
-  categories,
-} = useCategories();
+  const { categories } = useCategorias();
 
   const changeInput = (e) => {
     const { name, value, type, checked } = e.target;
@@ -60,11 +55,13 @@ export const ProductsPage = () => {
 
     const productData = mapFormDataToProduct(formData);
 
-    const wasSaved = await saveProduct(productData, editingId);
-
-    if (wasSaved) {
-      resetForm();
+    if (editingId) {
+      await editProduct(editingId, productData);
+    } else {
+      await addProduct(productData);
     }
+
+    resetForm();
   };
 
   const handleEdit = (product) => {
@@ -73,9 +70,9 @@ export const ProductsPage = () => {
   };
 
   const handleDelete = async (id) => {
-    const wasDeleted = await removeProduct(id);
+    await removeProduct(id);
 
-    if (wasDeleted && editingId === id) {
+    if (editingId === id) {
       resetForm();
     }
   };
@@ -98,7 +95,7 @@ export const ProductsPage = () => {
     <Container maxWidth="xl" sx={{ py: 3 }}>
       <Box sx={{ mb: 3 }}>
         <Typography variant="h4" fontWeight={700}>
-          Productos
+          Productos (Luis)
         </Typography>
 
         <Typography variant="body2" color="text.secondary">
@@ -108,7 +105,7 @@ export const ProductsPage = () => {
 
       {error && (
         <Alert severity="error" sx={{ mb: 3 }}>
-          Error: {error}
+          Error: {String(error?.message || error)}
         </Alert>
       )}
 
