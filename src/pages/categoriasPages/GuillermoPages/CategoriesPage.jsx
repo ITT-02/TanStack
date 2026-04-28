@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { CategoryForm } from '../../../components/productosComponents/GuillermoComponents/CategoryForm';
-import { CategoryList } from '../../../components/productosComponents/GuillermoComponents/CategoryList';
+import { CategoryForm } from '../../../components/categoriasComponents/GuillermoComponents/CategoryForm';
+import { CategoryList } from '../../../components/categoriasComponents/GuillermoComponents/CategoryList';
 import { useCategories } from '../../../hooks/categoriasHooks/GuillermoHooks/useCategoriesTanstack';
 import {
   initialCategoryFormData,
